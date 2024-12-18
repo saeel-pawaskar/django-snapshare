@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR -->
+        <div class="col-md-2 border">
+            {% include 'main/sidebar.html' %}
+        </div>
+        <!-- MAIN -->
+        <div class="col-md-10" style="background-color: #d9d6d6;">
+            <div class="row mt-4">
+                <div class="col-md-5 offset-md-1 p-0">
+                    <div class="row d-flex justify-content-end">
+                        <img src="{{ post.image.url }}" alt="Post" 
+                        class="img-fluid" style="height: 650px; width: 600px;">
+                    </div>
+                </div>
+                <div class="col-md-4 border" style="background-color: #fff;">
+                    <div class="row d-flex flex-row mt-2 pb-2 border-bottom">
+                        <div class="col-md-2">
+                            <a href="{% url 'profile' slug=post.user.slug %}">
+                                <img src="{{ post.user.profile_picture.url }}" alt="Profile Picture"
+                                class="rounded-circle" style="height: 50px; width: 50px;">
+                            </a>
+                        </div>
+                        <div class="col-md-8 p-0 d-flex justify-content-center flex-column">
+                            <a href="{% url 'profile' slug=post.user.slug %}" class="profile-link">
+                                <strong>{{ post.user.username }}</strong>
+                            </a>
+                            <small>{{ post.user.fullname }}</small>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-ellipsis fa-lg"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="comment mt-2 mb-2">
+                                <a href="{% url 'profile' slug=post.user.slug %}" class="comment-link">
+                                    <img src="{{ post.user.profile_picture.url }}" alt="Profile Picture"
+                                        class="rounded-circle" style="height: 35px; width: 35px; margin-right: 5px;">
+                                </a>
+                                <a href="{% url 'profile' slug=post.user.slug %}">
+                                    <strong>{{ post.user.username }}</strong>
+                                </a> 
+                                <span>{{ post.caption }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border-bottom" style="height: 430px;">
+                        <div class="col-md-12">
+                            {% for user in comments %}
+                            <div class="comment mt-2 mb-2">
+                                <a href="{% url 'profile' slug=user.user.slug %}" class="comment-link">
+                                    <img src="{{ user.user.profile_picture.url }}" alt="Profile Picture"
+                                        class="rounded-circle" style="height: 35px; width: 35px; margin-right: 5px;">
+                                </a>
+                                <a href="{% url 'profile' slug=user.user.slug %}" class="comment-link">
+                                    <strong>{{ user.user.username }}</strong>
+                                </a>
+                                <span>{{ user.comment }}</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mt-2">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <a href="{% url 'like' post_id=post.id %}">
+                                        <i class="fa-regular fa-heart fa-lg"></i>
+                                    </a>
+                                    <i class="fa-regular fa-comment fa-lg mx-2"></i>
+                                    <i class="fa-regular fa-paper-plane fa-lg"></i>
+                                </div>
+                                <div class="col-md-4 d-flex justify-content-end">
+                                    <i class="fa-regular fa-bookmark fa-lg mt-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border-bottom pb-2 mb-1">
+                        <div class="col-md-12 mt-1">
+                            <strong>{{ post.likes }} Likes</strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mt-1 pb-2">
+                            <form id="commentForm" action="{% url 'comment' id=post.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="source_page" value="profile">
+                                <input type="text" name="comment" id="comment"
+                                class="form-control text-secondary" placeholder="Add a comment"
+                                style="border: none; box-shadow: none; padding: 0; font-size: 14px;">
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-1">
+                    <a href="{% url 'profile' slug=post.user.slug %}">
+                        <span aria-hidden="true" style="font-size: 25px;">&times;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

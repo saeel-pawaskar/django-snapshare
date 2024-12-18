@@ -1,0 +1,31 @@
+/* a{
+    margin: 0;
+} */
+
+.user {
+    padding-left: 20px;
+}
+
+p {
+    margin: 0;
+}
+
+label {
+    font-weight: bold;
+}
+
+/* .form-control {
+    padding-left: 0;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #262626;
+} */
+
+textarea {
+    height: 20px;
+}
+
+.changephoto {
+    width: 85%;
+    border-radius: 4px;
+}

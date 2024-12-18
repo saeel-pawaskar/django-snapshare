@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        
+        <!-- SIDEBAR -->
+        <div class="col-md-2 border">
+            {% include 'main/sidebar.html' %}
+        </div>
+
+        <!-- MAIN -->
+        <div class="col-md-10 mt-5">
+            <div class="row">
+                <div class="col-md-5 offset-md-2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form action="{% url 'search' %}" method="post">
+                                {% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="search" id="searchInput" placeholder="Search for...">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit" id="searchButton">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-12">
+                            {% for profile in user_profile %}
+                            <div class="row d-flex flex-row mt-3">
+                                <div class="col-md-2">
+                                    <a href="{% url 'profile' slug=profile.slug %}">
+                                        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture"
+                                        class="rounded-circle" style="height: 55px; width: 55px;">
+                                    </a>
+                                </div>
+                                <div class="col-md-5 p-0 d-flex justify-content-center flex-column">
+                                    <a href="{% url 'profile' slug=profile.slug %}">
+                                        <strong>{{ profile.username }}</strong>
+                                    </a>
+                                    <small class="text-secondary">{{ profile.fullname }}</small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

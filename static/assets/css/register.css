@@ -1,0 +1,72 @@
+body {
+    background: #fafafa;
+    font-size: 14px;
+}
+
+.wrapper .header {
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+    margin: 50px auto;
+}
+
+.wrapper .header .top,
+.wrapper .login {
+    background: #fff;
+    border: 1px solid #d6d4d4;
+    border-radius: 1px;
+    padding: 40px 40px 20px;
+}
+
+.wrapper .header .logo img {
+    display: block;
+    margin: 0 auto 35px;
+}
+
+.wrapper .header .form .input_field {
+    margin-bottom: 5px;
+}
+
+.wrapper .header .form .input_field .input {
+    width: 100%;
+    background: #fafafa;
+    border: 1px solid #dcd9d9;
+    font-size: 12px;
+    border-radius: 3px;
+    color: #262626;
+    padding: 10px;
+}
+
+.wrapper .header .form .input_field .input:focus {
+    border: 1px solid #949393;
+}
+
+.wrapper .header .form .signup_btn {
+    padding-left: 0;
+    margin: 10px 0px;
+    text-align: center;
+}
+
+.wrapper .header .form .signup_btn button {
+    background-color: #3897f0;
+    border: 1px solid #3897f0;
+    border-radius:4px;
+    color: #fff;
+    padding: 5px;
+    width: 100%;
+}
+
+.wrapper .login {
+    margin: 10px 0 20px;
+    padding: 25px 40px;
+    text-align: center;
+    color: #262626;
+}
+
+.wrapper .login p {
+    margin: 0;
+}
+
+.wrapper .login a {
+    color: #3897f0;
+}

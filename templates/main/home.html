@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR -->
+        <div class="col-md-2 border">
+            {% include 'main/sidebar.html' %}
+        </div>
+        <!-- POST SECTION -->
+        <div class="col-md-5 offset-md-1">
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="row d-flex flex-column">
+                        {% for post in feeds %}
+                            <div class="col-md-12 mt-3">
+                                <div class="row d-flex flex-row mb-2">
+                                    <div class="col-md-1 p-0">
+                                        <a href="{% url 'profile' slug=post.user.slug %}">
+                                            <img src="{{ post.user.profile_picture.url }}" alt="Profile Picture"
+                                            class="rounded-circle" style="height: 40px; width: 40px;">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8 p-0 d-flex justify-content-center flex-column">
+                                        <a href="{% url 'profile' slug=post.user.slug %}">
+                                            <strong>{{ post.user.username }}</strong>
+                                        </a>
+                                        <small>{{ post.created_at|date:"j F" }}</small>
+                                    </div>
+                                    <div class="col-md-3 d-flex justify-content-end align-items-center">
+                                        <i class="fa-solid fa-ellipsis fa-lg"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <img src="{{ post.image.url }}" alt="Post Image">
+                            </div>
+                            <div class="col-md-12 p-0 mt-2">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <a href="{% url 'like' post_id=post.id %}">
+                                            <i class="fa-regular fa-heart fa-lg"></i>
+                                        </a>
+                                        <i class="fa-regular fa-comment fa-lg mx-2"></i>
+                                        <i class="fa-regular fa-paper-plane fa-lg"></i>
+                                    </div>
+                                    <div class="col-md-4 d-flex justify-content-end">
+                                        <i class="fa-regular fa-bookmark fa-lg mt-3"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0 mt-1">
+                                <strong>{{ post.likes }} Likes</strong>
+                            </div>
+                            <div class="col-md-12 p-0 mt-1">
+                                <a href="{% url 'profile' slug=post.user.slug %}">
+                                    <strong>{{ post.user.username }}</strong>
+                                </a> 
+                                <span>{{ post.caption }}</span>
+                            </div>
+                            <div class="col-md-12 p-0 mt-1">
+                                <a href="{% url 'post' slug=post.slug %}" class="text-secondary">View all comments</a>
+                            </div>
+                            <div class="col-md-12 p-0 mt-1 border-bottom pb-2 mb-3">
+                                <form id="commentForm" action="{% url 'comment' id=post.id %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="source_page" value="home">
+                                    <input type="text" name="comment" id="comment"
+                                    class="form-control text-secondary" placeholder="Add a comment"
+                                    style="border: none; box-shadow: none; padding: 0; font-size: 14px;">
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- USER SECTION -->
+        <div class="col-md-4">
+            <div class="row d-flex flex-column">
+                <div class="col-md-11 offset-md-1">
+                    <div class="col-md-12 mt-4 mb-4">
+                        <div class="row d-flex flex-row">
+                            <div class="col-md-2">
+                                <a href="{% url 'profile' slug=user_profile.username %}">
+                                    <img src="{{ user_profile.profile_picture.url }}" alt="Profile Picture"
+                                    class="rounded-circle" style="height: 50px; width: 55px;">
+                                </a>
+                            </div>
+                            <div class="col-md-5 p-0 d-flex justify-content-center flex-column">
+                                <a href="{% url 'profile' slug=user_profile.username %}">
+                                    <strong>{{ user_profile.username }}</strong>
+                                </a>
+                                <small class="text-secondary">{{ user_profile.fullname }}</small>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-ellipsis fa-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <strong>Suggested Users</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-2">
+                        {% for new_user in suggested_users %}
+                            <div class="row d-flex flex-row mt-3">
+                                <div class="col-md-2">
+                                    <a href="{% url 'profile' slug=new_user.slug %}">
+                                        <img src="{{ new_user.profile_picture.url }}" alt="Profile Picture"
+                                        class="rounded-circle" style="height: 50px; width: 50px;">
+                                    </a>
+                                </div>
+                                <div class="col-md-5 p-0 d-flex justify-content-center flex-column">
+                                    <a href="{% url 'profile' slug=new_user.slug %}">
+                                        <strong>{{ new_user.username }}</strong>
+                                    </a>
+                                    <small class="text-secondary">{{ new_user.fullname }}</small>
+                                </div>
+                                <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                    <form action="{% url 'follow' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="username" value="{{ new_user.username }}">
+                                        <input type="hidden" name="source_page" value="home">
+                                        <button type="submit" class="text-primary" 
+                                        style="background: none; border: none;">Follow</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

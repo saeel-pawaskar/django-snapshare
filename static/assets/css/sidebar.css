@@ -1,0 +1,23 @@
+.sidebar {
+    height: 100vh;
+    padding-top: 10px;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar a {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: inherit;
+    border-radius: 5px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.sidebar a:hover {
+    color: #fff;
+    background-color: #656666;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}

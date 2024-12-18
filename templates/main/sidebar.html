@@ -1,0 +1,37 @@
+{% load static %}
+<div class="sidebar d-flex flex-column">
+    <div class="logo d-flex justify-content-center mb-4">
+        <h1>SnapShare</h1>
+    </div>
+    <a href="{% url 'home' %}" class="mb-2 p-2 mt-3 ms-2">
+        <i class="fa-solid fa-house fa-lg text-dark"></i><span class="ms-3">Home</span>
+    </a>
+    <a href="{% url 'search' %}" class="mb-2 p-2 ms-2">
+        <i class="fa-solid fa-search fa-lg text-dark"></i><span class="ms-3">Search</span>
+    </a>
+    <!-- <a href="" class="mb-2 p-2 ms-2">
+        <i class="fa-regular fa-compass fa-lg text-dark"></i><span class="ms-3">Explore</span>
+    </a> -->
+    <a href="{% url 'show_notifications' %}" class="mb-2 p-2 ms-2">
+        <i class="fa-regular fa-heart fa-lg text-dark"></i><span class="ms-3">Notification</span>
+    </a>
+    <a href="{% url 'create_post' %}" class="mb-2 p-2 ms-2">
+        <i class="fa-regular fa-square-plus fa-lg text-dark"></i><span class="ms-3">Create</span>
+    </a>
+    <a href="{% url 'profile' slug=request.user %}" class="mb-2 p-2 ms-2">
+        <i class="fa-regular fa-user fa-lg text-dark"></i><span class="ms-3">Profile</span>
+    </a>
+    <div class="dropdown">
+        <a href="" class="mb-2 p-2 ms-2 mt-auto d-flex align-items-center dropdown-toggle" data-bs-toggle="dropdown">
+            <i class="fa-solid fa-bars fa-lg text-dark"></i><span class="ms-3">More</span>
+        </a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'settings' %}">Setting</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'logout' %}" id="logout-link">Logout</a>
+            <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                {% csrf_token %}
+            </form>
+        </div>
+    </div>
+</div>

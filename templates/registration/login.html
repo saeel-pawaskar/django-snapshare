@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- <style>
+    @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+
+    h1 {
+        font-family: "Abril Fatface", serif;        
+        font-weight: 400;
+        font-style: normal;
+    }
+</style> -->
+<div class="wrapper">
+    <div class="header">
+        <div class="top">
+            <div class="logo d-flex justify-content-center mb-4">
+                <h1>SnapShare</h1>
+            </div>
+            <div class="form">
+                <form id="loginForm" method="post" action="{% url 'login_auth' %}">
+                    {% csrf_token %}
+                    {% include 'components/message.html' %}
+
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorBox"
+                        style="display: none;">
+                        <span id="message"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                            onclick="collapse('errorBox')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="input_field">
+                        <input type="text" name="username" class="input" id="usernameOrEmail" placeholder="Username">
+                    </div>
+                    <div class="input_field">
+                        <input type="password" name="password" class="input" id="password" placeholder="Password">
+                    </div>
+                    <div class="forgot">
+                        <a href="{% url 'password_reset' %}">Forgot password?</a>
+                    </div>
+                    <!-- <div class="loginbtn">
+                        <button type="submit">Log In</button>
+                    </div> -->
+                    <div class="loginbtn">
+                        <button type="submit">Log In</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="signup">
+            <p>Don't have an account? <a href="{% url 'register' %}">Sign up</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

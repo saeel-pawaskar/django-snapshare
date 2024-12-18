@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- SIDEBAR -->
+        <div class="col-md-2 border">
+            {% include 'main/sidebar.html' %}
+        </div>
+
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-5 offset-md-1 mt-4">
+                    <div class="row">
+                        <div class="card col-md-12">
+                            <div class="card-header">
+                                Notifications
+                            </div>
+                            <div class="row d-flex flex-row mt-2 mb-2" style="margin-left: 10px;">
+                                <div class="col-md-12">
+                                    <div class="row d-flex flex-row mb-2">
+                                        {% for notification in notifications %}
+                                        {% if notification.is_seen == False %}
+                                        <div class="col-md-1 p-0 mb-3" style="margin-right: 10px;">
+                                            <a href="{% url 'profile' slug=notification.sender.slug %}">
+                                                <img src="{{ notification.sender.profile_picture.url }}" alt="Profile Picture"
+                                                class="rounded-circle" style="height: 40px; width: 40px;">
+                                            </a>
+                                        </div>
+
+                                        {% if notification.notification_type == 1 %}
+                                        <div class="col-md-auto mb-3 p-0 d-flex justify-content-center flex-column">
+                                            <a href="{% url 'profile' slug=notification.sender.slug %}">
+                                                <strong>{{ notification.text_preview }}</strong>
+                                            </a>
+                                            <small>{{notification.date | date:"j F" }}</small>
+                                        </div>
+                                        <div class="col-md-6 mb-3 p-0">
+                                            <a href="{% url 'post' slug=notification.post.slug %}">
+                                                <img src="{{ notification.post.image.url }}" alt="Profile Picture"
+                                                class="" style="height: 40px; width: 40px; margin-left: 10px;">
+                                            </a>
+                                        </div>
+
+                                        {% elif notification.notification_type == 2 %}
+                                        <div class="col-md-auto mb-3 p-0 d-flex justify-content-center flex-column">
+                                            <a href="{% url 'profile' slug=notification.sender.slug %}">
+                                                <strong>{{ notification.text_preview }}</strong>
+                                            </a>
+                                            <small>{{notification.date | date:"j F" }}</small>
+                                        </div>
+                                        <div class="col-md-1 mb-3 p-0">
+                                            <a href="{% url 'post' slug=notification.post.slug %}">
+                                                <img src="{{ notification.post.image.url }}" alt="Profile Picture"
+                                                class="" style="height: 40px; width: 40px; margin-left: 10px;">
+                                            </a>
+                                        </div>
+
+                                        {% elif notification.notification_type == 3 %}
+                                        <div class="col-md-auto mb-3 p-0 d-flex justify-content-center flex-column">
+                                            <a href="{% url 'profile' slug=notification.sender.slug %}">
+                                                <strong>{{ notification.text_preview }}</strong>
+                                            </a>
+                                            <small>{{notification.date | date:"j F" }}</small>
+                                        </div>
+                                        <div class="col-md-2 mb-3" style="margin-right: 5px;">
+                                            <form action="{% url 'accept_request' %}" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="username" value="{{ notification.sender.username }}">
+                                                <input type="hidden" name="source_page" value="notification">
+                                                <button type="submit" class="btn btn-primary">Accept</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <a href="{% url 'delete_notification' notify_id=notification.id %}" class="btn btn-primary">Delete</a>
+                                        </div>
+
+                                        {% elif notification.notification_type == 4 %}
+                                        <div class="col-md-10 mb-3 p-0 d-flex justify-content-center flex-column">
+                                            <a href="{% url 'profile' slug=notification.sender.slug %}">
+                                                <strong>{{ notification.text_preview }}</strong>
+                                            </a>
+                                            <small>{{notification.date | date:"j F" }}</small>
+                                        </div>
+                                        <!-- <div class="col-md-2" style="margin-right: 5px;">
+                                            <form action="{% url 'accept_request' %}" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="username" value="{{ notification.sender.username }}">
+                                                <input type="hidden" name="source_page" value="notification">
+                                                <button type="submit" class="btn btn-primary">Confirm</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="{% url 'delete_notification' notify_id=notification.id %}" class="btn btn-primary">Delete</a>
+                                        </div> -->
+                                        {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

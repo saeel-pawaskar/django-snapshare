@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 border">
+            {% include 'main/sidebar.html' %}
+        </div>
+        <div class="col-md-10">
+            <div class="row mt-5">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div>
+                        <h3><strong>Edit Profile</strong></h3>
+                    </div>
+                    <form action="{% url 'update_profile' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row mt-5 border p-3 photo">
+                            <div class="col-md-1 p-0">
+                                <div class="d-flex align-item-center justify-content-center">
+                                    <img src="{{ user_profile.profile_picture.url }}"
+                                        class="rounded-circle img-fluid profile-photo"
+                                        style="height: 50px; width: 55px;"
+                                        alt="{{ user_profile.username }}'s Profile Picture" loading="lazy" />
+                                </div>
+                            </div>
+                            <div class="col-md-8 p-1">
+                                <div class="user">
+                                    <span><strong>{{ user_profile.username }}</strong></span>
+                                    <p class="text-secondary">{{ user_profile.fullname }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <input type="file" id="profile_picture"
+                                        class="btn btn-primary form-control changephoto" 
+                                        name="profile_picture">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-5">
+                            <div class="form-group mt-3">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="fullname" placeholder="Name"
+                                    value="{{ user_profile.fullname }}">
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Username" value="{{ user_profile.username }}">
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="bio">Bio</label>
+                                <textarea class="form-control" id="bio" rows="3" name="bio"
+                                    placeholder="Bio">{{ user_profile.bio }}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                            <a href="{% url 'profile' slug=user_profile.username %}" class="btn btn-primary mt-3 mx-2">Cancel</a>
+                        </div>
+                    </form>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
